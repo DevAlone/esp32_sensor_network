@@ -1,0 +1,34 @@
+{
+  "name": "esp32_sensor_network_frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@amcharts/amcharts3-react": "^3.1.0",
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "amcharts3": "^3.21.14",
+    "axios": "^0.18.0",
+    "react": "^16.8.1",
+    "react-alert": "^5.1.0",
+    "react-alert-template-basic": "^1.0.0",
+    "react-dom": "^16.8.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "proxy": "http://10.0.3.6:8080"
+}
