@@ -4,6 +4,7 @@ import 'amcharts3';
 import 'amcharts3/amcharts/serial';
 import AmCharts from '@amcharts/amcharts3-react';
 import DoRequest from "./api";
+import WS from "./websocket";
 
 const styles = theme => ({});
 
@@ -20,14 +21,41 @@ class Graph extends Component {
         this.graphType = "line";  // "column";  // for bar charts
         this.xIsTimestamp = true;
         this.timestampMultiplier = typeof this.props.timestampMultiplier === "undefined" ?
-                1000 :
-                this.props.timestampMultiplier;
+            1000 :
+            this.props.timestampMultiplier;
     }
 
+    onWebsocketAdded = (message) => {
+        message = message.data;
+        if (message.model_name === this.modelName) {
+            const data = message.data;
+            if (data.sensor_id !== this.itemId) {
+                return;
+            }
+
+            this.setState(prevState => {
+                let newData = prevState.data.slice();
+                newData.push({
+                    timestamp: new Date(data.timestamp),
+                    value: data.value,
+                });
+
+                return {
+                    data: newData,
+                };
+            });
+        }
+    };
+
     loadData = (offset, limit, dataAccumulator, callback) => {
-        const filter = this.itemId != null ?
+        let filter = this.itemId != null ?
             this.itemIdFieldName + " == " + this.itemId + "u"
             : "";
+
+        if (filter.length > 0) {
+            filter += " && ";
+        }
+        filter += "timestamp > " + (Math.round(new Date()) - 1000 * 3600 * 2);
 
         DoRequest("list_model", {
             "name": this.modelName,
@@ -54,18 +82,12 @@ class Graph extends Component {
     };
 
     componentDidMount() {
-        var data = [];
+        let data = [];
         this.loadData(0, 512, data, (resultData) => {
-            if (resultData.length === 0) {
-                this.setState({
-                    data: resultData,
-                });
-                return;
-            }
-
             this.setState({
                 data: resultData,
             });
+            WS.SubscribeOnMessage("model_added", this.onWebsocketAdded);
         });
     }
 
@@ -113,54 +135,26 @@ class Graph extends Component {
                 "valueField": "value",
                 "balloonText": "<span style='font-size:18px;'>[[value]]</span>"
             }],
-            "chartScrollbar": {
+            /*"chartScrollbar": {
                 "graph": "g1",
-                /*"oppositeAxis": false,
-                "offset": 30,*/
                 "scrollbarHeight": 80,
-                /*
-                "backgroundAlpha": 0,
-                "selectedBackgroundAlpha": 0.1,
-                "selectedBackgroundColor": "#888888",
-                "graphFillAlpha": 0,
-                "graphLineAlpha": 0.5,
-                "selectedGraphFillAlpha": 0,
-                "selectedGraphLineAlpha": 1,
-                */
                 "autoGridCount": true,
-                // "color": "#AAAAAA"
-            },
+            },*/
             "chartCursor": {
-                /*
-                "pan": true,
-                 "valueLineEnabled": true,
-                 "valueLineBalloonEnabled": true,
-                 "cursorAlpha": 1,
-                 "cursorColor": "#258cbb",
-                 */
                 "limitToGraph": "g1",
-                /*
-                "valueLineAlpha": 0.2,
-                "valueZoomable": true
-                 */
             },
-            /*
-            "valueScrollbar": {
-                "oppositeAxis": false,
-                "offset": 50,
-                "scrollbarHeight": 10
-            },
-            */
             "categoryField": "timestamp",
             "categoryAxis": {
-                "minPeriod": "mm",
+                "minPeriod": "ss",
                 "parseDates": this.xIsTimestamp,
                 "axisColor": "#DADADA",
                 "dashLength": 1,
                 "minorGridEnabled": true
             },
             "dataProvider": this.state.data,
-            "export": {"enabled": true}
+            "export": {"enabled": false},
+            "legend": {"enabled": false},
+            "zoomControl": {"zoomControlEnabled": false},
         };
 
         return (
@@ -175,7 +169,7 @@ class Graph extends Component {
                 {
                     <AmCharts.React style={{
                         width: "100%",
-                        height: typeof (this.state.data) !== "undefined" && this.state.data.length > 0 ? "500px" : "0px",
+                        height: typeof (this.state.data) !== "undefined" && this.state.data.length > 0 ? "250px" : "0px",
                         overflow: "hidden",
                     }} options={config}/>
                 }

@@ -3,6 +3,15 @@ import Block from "./Block";
 import NiceLink from "./NiceLink";
 import Graph from "./Graph";
 import DoRequest from "./api";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Typography from "@material-ui/core/Typography";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+
+import "./Home.css";
+import Paper from "@material-ui/core/Paper";
+import Sensor from "./Sensor";
 
 class Home extends Component {
     constructor(params) {
@@ -62,41 +71,48 @@ class Home extends Component {
     };
 
     render() {
+        const classes = this.props;
+
         return (
             <div>
+                <Block><Typography>esp32_sensor_network  demo</Typography></Block>
+                <Typography>Available nodes:</Typography>
                 {
                     this.state.nodes === null ?
                         "Loading..." :
                         Object.keys(this.state.nodes).map((key) => {
                             const node = this.state.nodes[key];
-                            return <Block key={key}>
-                                <p>Node's mac is {node.mac_address}</p>
-                                <p>Node's name is {node.name.length > 0 ? '"' + node.name + '"' : "empty"}</p>
-                                <p>Available sensors:</p>
-                                {
-                                    typeof node.sensors === "undefined" ?
-                                        "loading..." :
-                                        Object.keys(node.sensors).map((key) => {
-                                            const sensor = node.sensors[key];
-                                            return <div key={key}>
-                                                <p>sensor's id is {sensor.id}</p>
-                                                <p>sensor's pin is {sensor.pin}</p>
-                                                <p>sensor's type is {sensor.type}</p>
-                                                <p>sensor's node mac address is {sensor.sensor_node_mac_address}</p>
-                                                <p>graph:</p>
-                                                <Graph
-                                                    modelName={"sensor_data"}
-                                                    itemId={sensor.id}
-                                                    itemIdFieldName={"sensor_id"}
-                                                    timestampMultiplier={1}
-                                                />
-                                            </div>;
-                                        })
-                                }
-                            </Block>;
+                            return <div key={key}>
+                                <Block>
+                                    <Typography>
+                                        Node's mac is {node.mac_address}
+                                        {
+                                            node.name.length > 0 ? <Typography>
+                                                111Node's name is {node.name}
+
+                                            </Typography> : null
+                                        }
+                                    </Typography>
+                                </Block>
+
+                                <div>
+                                    <Typography>Available sensors:</Typography>
+                                </div>
+                                <div className={"sensorsContainer"}>
+                                    {
+                                        typeof node.sensors === "undefined" ?
+                                            "loading..." :
+                                            Object.keys(node.sensors).map((key) => {
+                                                const sensor = node.sensors[key];
+                                                return <div className={"sensorContainer"} key={key}>
+                                                    <Sensor sensor={sensor}/>
+                                                </div>;
+                                            })
+                                    }
+                                </div>
+                            </div>;
                         })
                 }
-                <Block>Home</Block>
             </div>
         );
     }

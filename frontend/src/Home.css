@@ -1,0 +1,32 @@
+.sensorsContainer {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: space-around;
+
+    padding: 0 !important;
+    background: none;
+}
+
+.sensorNodeExpansionPanelDetails {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    padding: 0 !important;
+}
+
+.sensorContainer  {
+    min-width: 400px;
+    width: 40%;
+    /*display: inline-block;*/
+    /*border: 1px solid #eee;*/
+    /*margin: 0 !important;*/
+    /*background: #aeaeae;*/
+}

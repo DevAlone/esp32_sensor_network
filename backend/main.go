@@ -3,10 +3,10 @@ package main
 import (
 	"sync"
 
-	"github.com/DevAlone/esp32_sensor_network/backend/server"
-
 	"github.com/DevAlone/esp32_sensor_network/backend/logger"
 	"github.com/DevAlone/esp32_sensor_network/backend/models"
+	"github.com/DevAlone/esp32_sensor_network/backend/server"
+	"github.com/DevAlone/esp32_sensor_network/backend/websocket"
 )
 
 func main() {
@@ -24,6 +24,11 @@ func main() {
 	wg.Add(1)
 	go func() {
 		PanicOnError(server.Run())
+	}()
+
+	wg.Add(1)
+	go func() {
+		PanicOnError(websocket.RunNewItemsHandler())
 	}()
 
 	wg.Wait()

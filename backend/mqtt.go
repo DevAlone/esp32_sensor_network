@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/DevAlone/esp32_sensor_network/backend/websocket"
+
 	"github.com/DevAlone/esp32_sensor_network/backend/helpers"
 
 	"github.com/DevAlone/esp32_sensor_network/backend/logger"
@@ -134,13 +136,18 @@ func processSensorData(mqttMessage *models.MQTTMessage, sensorData *models.MQTTM
 		if err != nil {
 			return errors.New(err)
 		}
-		err = models.Db.Insert(&models.SensorData{
+		sensorDataModel := &models.SensorData{
 			SensorId:  temperatureSensor.Id,
 			Timestamp: models.TimestampType(time.Now().UnixNano() / int64(time.Millisecond)),
 			Value:     dhtData.TemperatureCelcius,
-		})
+		}
+		err = models.Db.Insert(sensorDataModel)
 		if err != nil {
 			return errors.New(err)
+		}
+		err = websocket.NotifyModelAdded("sensor_data", sensorDataModel)
+		if err != nil {
+			return err
 		}
 
 		// humidity
@@ -160,13 +167,18 @@ func processSensorData(mqttMessage *models.MQTTMessage, sensorData *models.MQTTM
 		if err != nil {
 			return errors.New(err)
 		}
-		err = models.Db.Insert(&models.SensorData{
+		sensorDataModel = &models.SensorData{
 			SensorId:  humiditySensor.Id,
 			Timestamp: models.TimestampType(time.Now().UnixNano() / int64(time.Millisecond)),
 			Value:     dhtData.Humidity,
-		})
+		}
+		err = models.Db.Insert(sensorDataModel)
 		if err != nil {
 			return errors.New(err)
+		}
+		err = websocket.NotifyModelAdded("sensor_data", sensorDataModel)
+		if err != nil {
+			return err
 		}
 
 		return nil

@@ -23,6 +23,7 @@ import Favicon from './assets/img/favicon.ico';
 import Icon from "@material-ui/core/Icon";
 import Home from "./Home";
 import "./App.css"
+import WS from "./websocket";
 
 const drawerWidth = 240;
 
@@ -118,7 +119,7 @@ const alertOptions = {
 
 class App extends React.Component {
   state = {
-    open: true,
+    open: false,
   };
 
   handleDrawerSwitch = () => {
@@ -126,6 +127,10 @@ class App extends React.Component {
       return {open: !prevState.open};
     });
   };
+
+  componentDidMount() {
+    WS.ConnectToWebsocket();
+  }
 
   render() {
     const {classes} = this.props;
