@@ -5,7 +5,7 @@ import (
 	logging "github.com/op/go-logging"
 )
 
-var Log = logging.MustGetLogger("parse_pikabu")
+var Log = logging.MustGetLogger("esp32_sensor_network")
 var LogFormat = logging.MustStringFormatter(
 	`%{color}%{module} %{pid} %{level:.5s} %{time:15:04:05.000} %{shortfile} %{shortfunc} ▶ %{id:03x}%{color:reset} %{message}`,
 )

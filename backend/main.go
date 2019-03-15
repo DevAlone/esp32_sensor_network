@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	"bitbucket.org/d3dev/parse_pikabu/core/config"
+	"github.com/DevAlone/esp32_sensor_network/backend/config"
 	"github.com/DevAlone/esp32_sensor_network/backend/logger"
 	"github.com/DevAlone/esp32_sensor_network/backend/models"
 	"github.com/DevAlone/esp32_sensor_network/backend/server"
@@ -14,9 +14,6 @@ import (
 func main() {
 	err := config.UpdateSettingsFromFile("config.json")
 	PanicOnError(err)
-
-	fmt.Printf("%v\n", config.Settings.Database)
-	return
 
 	err = models.InitDb()
 	if err != nil {
