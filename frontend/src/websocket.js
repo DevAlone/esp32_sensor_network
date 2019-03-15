@@ -24,8 +24,10 @@ class _WS {
                 console.log("websocket disconnected");
             };
             ws.onerror = (event) => {
+				alert("websocket error")
                 console.log("websocket error");
                 console.log(event);
+				console.log(event.data);
             }
         }
     }
