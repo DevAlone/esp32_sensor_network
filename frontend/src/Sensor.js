@@ -57,7 +57,7 @@ class Sensor extends Component {
                 this.state.sensorData.value
             ]);
             tableRows.push([
-              "время последнего обновления",
+              "last update time",
                 moment(new Date(this.state.sensorData.timestamp)).format("H:mm:ss"),
             ]);
         }
