@@ -8,9 +8,9 @@ class _WS {
         } else {
             // TODO: connect to current domain
             const hostname = window.location.hostname;
-            // const port = window.location.port;
-            const port = 8080;
-            const url = "ws://" + hostname + (port === "80" ? "" : ":" + port) + "/ws";
+            const port = window.location.port;
+            const url = (port === 443 ? "wss://" : "ws://") + 
+				hostname + (port === 433 || port === "80" ? "" : ":" + port) + "/ws";
             let ws = new WebSocket(url);
             ws.onopen = () => {
                 // on connect
