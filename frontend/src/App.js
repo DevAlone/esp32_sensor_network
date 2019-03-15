@@ -164,6 +164,7 @@ class App extends React.Component {
               <CssBaseline/>
 
               {/* sidebar */}
+              {/*
               <Drawer
                   variant="permanent"
                   className={"sidebar"}
@@ -185,6 +186,7 @@ class App extends React.Component {
                 <List>{mainMenuItems}</List>
                 <Divider/>
               </Drawer>
+              */}
               <main id="appContent" className={classes.content}>
                 <Route exact path={"/"} component={Home}/>
                 <Route path={"/nodes"} component={Home}/>
