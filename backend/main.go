@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/DevAlone/esp32_sensor_network/backend/config"
