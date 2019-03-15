@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	err := config.UpdateSettingsFromFile("config.go")
+	err := config.UpdateSettingsFromFile("config.json")
 	PanicOnError(err)
 
 	err = models.InitDb()
