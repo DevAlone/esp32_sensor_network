@@ -3,6 +3,7 @@ package main
 import (
 	"sync"
 
+	"bitbucket.org/d3dev/parse_pikabu/core/config"
 	"github.com/DevAlone/esp32_sensor_network/backend/logger"
 	"github.com/DevAlone/esp32_sensor_network/backend/models"
 	"github.com/DevAlone/esp32_sensor_network/backend/server"
@@ -10,7 +11,10 @@ import (
 )
 
 func main() {
-	err := models.InitDb()
+	err := config.UpdateSettingsFromFile("config.go")
+	PanicOnError(err)
+
+	err = models.InitDb()
 	if err != nil {
 		panic(err)
 	}
