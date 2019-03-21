@@ -20,10 +20,12 @@ func main() {
 	}
 	var wg sync.WaitGroup
 
-	wg.Add(1)
-	go func() {
-		PanicOnError(RunMQTTClient())
-	}()
+	/*
+		wg.Add(1)
+		go func() {
+			PanicOnError(RunMQTTClient())
+		}()
+	*/
 
 	wg.Add(1)
 	go func() {

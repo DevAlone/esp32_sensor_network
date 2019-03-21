@@ -40,6 +40,7 @@ func Run() error {
 	apiRouter := router.Group("/api/v1/")
 	{
 		apiRouter.POST("list_model", api.ListModel)
+		apiRouter.POST("push_sensors_data", api.PushSensorsData)
 		apiRouter.GET("test", func(context *gin.Context) {
 			context.JSON(http.StatusOK, map[string]string{
 				"status": "ok",
