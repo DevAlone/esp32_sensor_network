@@ -167,7 +167,7 @@ class Graph extends Component {
 
     updateData = () => {
         let data = [];
-        this.loadData(0, 512, data, (resultData) => {
+        this.loadData(0, 1024, data, (resultData) => {
             if (resultData.length < this.minimumNumberOfResults) {
                 const filterButtonIndex = this.timestampFilterButtons.findIndex(value => {
                     return value.type === this.timestampFilterCurrentButton;
@@ -187,7 +187,8 @@ class Graph extends Component {
 
     componentDidMount() {
         this.timestampFilterCurrentButton = this.props.defaultTimestampFilter || this.timestampFilterButtons[0].type;
-        this.toggleTimestampFilterButton(this.timestampFilterCurrentButton)
+        this.toggleTimestampFilterButton(this.timestampFilterCurrentButton);
+        WS.SubscribeOnMessage("model_added", this.onWebsocketAdded);
     }
 
     render() {
