@@ -289,11 +289,11 @@ class Graph extends Component {
                 {
                     <div style={{
                         width: "100%",
-                        height: "500px",
+                        height: "250px",
                     }}>
                         <AmCharts.React style={{
                             width: "100%",
-                            height: typeof (this.state.data) !== "undefined" && this.state.data !== null && this.state.data.length > 0 ? "500px" : "0",
+                            height: typeof (this.state.data) !== "undefined" && this.state.data !== null && this.state.data.length > 0 ? "250px" : "0",
                             // overflow: "hidden",
                         }} options={config}/>
                     </div>
