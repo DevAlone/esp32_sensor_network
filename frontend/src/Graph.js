@@ -82,26 +82,22 @@ class Graph extends Component {
             this.props.timestampMultiplier;
     }
 
-    onWebsocketAdded = (message) => {
-        message = message.data;
-        if (message.model_name === this.modelName) {
-            const data = message.data;
-            if (data.sensor_id !== this.itemId) {
-                return;
-            }
-
-            this.setState(prevState => {
-                let newData = prevState.data.slice();
-                newData.push({
-                    timestamp: new Date(data.timestamp),
-                    value: data.value,
-                });
-
-                return {
-                    data: newData,
-                };
-            });
+    onWebsocketAdded = (model) => {
+        if (model.sensor_id !== this.itemId) {
+            return;
         }
+
+        this.setState(prevState => {
+            let newData = prevState.data.slice();
+            newData.push({
+                timestamp: new Date(model.timestamp),
+                value: model.value,
+            });
+
+            return {
+                data: newData,
+            };
+        });
     };
 
     toggleTimestampFilterButton = (buttonType) => {
@@ -188,7 +184,7 @@ class Graph extends Component {
     componentDidMount() {
         this.timestampFilterCurrentButton = this.props.defaultTimestampFilter || this.timestampFilterButtons[0].type;
         this.toggleTimestampFilterButton(this.timestampFilterCurrentButton);
-        WS.SubscribeOnMessage("model_added", this.onWebsocketAdded);
+        WS.SubscribeOnModelAdded("sensor_data", this.onWebsocketAdded);
     }
 
     render() {
