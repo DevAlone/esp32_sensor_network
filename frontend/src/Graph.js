@@ -36,7 +36,9 @@ class Graph extends Component {
         super(props);
         this.modelName = this.props.modelName;
         this.itemId = this.props.itemId;
-        this.state = {};
+        this.state = {
+            data: null,
+        };
         this.isLogarithmic = false;
         this.graphType = "line";  // "column";  // for bar charts
         this.xIsTimestamp = typeof this.props.xIsTimestamp !== "undefined" ? this.props.xIsTimestamp : true;
@@ -88,7 +90,7 @@ class Graph extends Component {
         }
 
         this.setState(prevState => {
-            let newData = prevState.data.slice();
+            let newData = prevState.data === null ? [] : prevState.data.slice();
             newData.push({
                 timestamp: new Date(model.timestamp),
                 value: model.value,
