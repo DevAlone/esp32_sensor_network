@@ -42,7 +42,7 @@ class Graph extends Component {
         this.isLogarithmic = false;
         this.graphType = "line";  // "column";  // for bar charts
         this.xIsTimestamp = typeof this.props.xIsTimestamp !== "undefined" ? this.props.xIsTimestamp : true;
-        this.minimumNumberOfResults = 16;
+        this.minimumNumberOfResults = 1;
         // in ms
         this.timestampFilterButtons = [
             {
