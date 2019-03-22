@@ -7,9 +7,12 @@ class API extends Component {
     doRequest(method, data) {
         return axios.post(apiURL + "/" + method, data).catch(
             error => {
-                console.log(error.response)
+                if (typeof error.response !== 'undefined') {
+                    console.log(error.response);
+                    console.log(error.response.data.error_message);
+                }
                 // this.props.alert.show(error.response.error_message);
-                alert(error.response.data.error_message);
+                // alert(error.response.data.error_message);
             }
         );
     }

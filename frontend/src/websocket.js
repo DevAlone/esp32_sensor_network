@@ -13,7 +13,6 @@ class _WS {
 				hostname + (port === 433 || port === "80" ? "" : ":" + port) + "/ws";
             let ws = new WebSocket(url);
             ws.onopen = () => {
-                // on connect
                 console.log("websocket connected");
             };
             ws.onmessage = (event) => {
@@ -21,14 +20,15 @@ class _WS {
             };
             ws.onclose = () => {
                 // on close
-                // TODO: connect again
                 console.log("websocket disconnected");
+                setTimeout(() => this.ConnectToWebsocket(), 1000);
             };
             ws.onerror = (event) => {
-				alert("websocket error")
+				// alert("websocket error")
                 console.log("websocket error");
                 console.log(event);
 				console.log(event.data);
+				ws.close();
             }
         }
     }
@@ -50,6 +50,8 @@ class _WS {
     handleMessage(message) {
         const jsonMessage = JSON.parse(message);
         const messageType = jsonMessage.type;
+
+        console.log("got message of type '" + messageType + "' with content '" + jsonMessage + "'");
 
         this.notifyIfExist(this.messageSubscriptions, messageType, jsonMessage);
 
@@ -74,6 +76,6 @@ class _WS {
     }
 }
 
-var WS = new _WS();
+let WS = new _WS();
 
 export default WS;

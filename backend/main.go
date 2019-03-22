@@ -30,11 +30,13 @@ func main() {
 	wg.Add(1)
 	go func() {
 		PanicOnError(server.Run())
+		wg.Done()
 	}()
 
 	wg.Add(1)
 	go func() {
 		PanicOnError(websocket.RunNewItemsHandler())
+		wg.Done()
 	}()
 
 	wg.Wait()

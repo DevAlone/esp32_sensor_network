@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell";
 import WS from "./websocket";
 import "./Sensor.css";
 import moment from "moment";
+import {useTranslation, withTranslation, Trans} from 'react-i18next';
 
 const CustomTableCell = withStyles(theme => ({
     head: {
@@ -43,21 +44,21 @@ class Sensor extends Component {
 
     render() {
         const classes = this.props;
+        const {t, i18n} = this.props;
 
         const sensor = this.state.sensor;
         const tableRows = [
-            // ["sensor's ID", sensor.id],
-            ["sensor's pin", sensor.pin],
+            [t("common:sensor.sensor_pin"), sensor.pin],
             // ["sensor's type", sensor.type],
-            // ["sensor's node mac address", this.state.sensor.sensor_node_mac_address],
         ];
         if (this.state.sensorData != null) {
+            let translatedSensorType = sensor.type;
             tableRows.push([
-                sensor.type,
+                t("common:sensor.sensor_type." + sensor.type),
                 this.state.sensorData.value
             ]);
             tableRows.push([
-              "last update time",
+              t("common:sensor.last_update_time"),
                 moment(new Date(this.state.sensorData.timestamp)).format("H:mm:ss"),
             ]);
         }
@@ -86,4 +87,4 @@ class Sensor extends Component {
     }
 }
 
-export default withStyles()(Sensor);
+export default withTranslation()(withStyles()(Sensor));

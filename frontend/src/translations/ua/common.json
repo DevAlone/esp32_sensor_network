@@ -1,0 +1,21 @@
+{
+  "home": {
+    "demo": "демонстрація",
+    "available_nodes": "Доступні вузли",
+    "available_sensors": "Доступні сенсори",
+    "node_mac_is": "MAC адреса вузла",
+    "node_name_is": "Назва вузла"
+  },
+  "sensor": {
+    "sensor_pin": "Контакт датчика",
+    "last_update_time": "Час останнього оновлення",
+    "sensor_type": {
+      "temperature": "Температура",
+      "humidity": "Вологість"
+    }
+  },
+  "logs": {
+    "logs": "Логи"
+  },
+  "loading": "Завантаження"
+}

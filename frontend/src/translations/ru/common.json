@@ -1,0 +1,21 @@
+{
+  "home": {
+    "demo": "демонстрация",
+    "available_nodes": "Доступные узлы",
+    "available_sensors": "Доступные сенсоры",
+    "node_mac_is": "MAC адрес узла",
+    "node_name_is": "Название узла"
+  },
+  "sensor": {
+    "sensor_pin": "Контакт датчика",
+    "last_update_time": "Время последнего обновления",
+    "sensor_type": {
+      "temperature": "Температура",
+      "humidity": "Влажность"
+    }
+  },
+  "logs": {
+    "logs": "Логи"
+  },
+  "loading": "Загрузка"
+}

@@ -30,3 +30,11 @@
     /*margin: 0 !important;*/
     /*background: #aeaeae;*/
 }
+
+.languageButtons {
+    text-align: right;
+}
+
+.languageButtons > * {
+    margin: 0 5px;
+}

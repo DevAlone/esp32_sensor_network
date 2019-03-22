@@ -1,0 +1,21 @@
+{
+  "home": {
+    "demo": "demo",
+    "available_nodes": "Available nodes",
+    "available_sensors": "Available sensors",
+    "node_mac_is": "Node's mac is",
+    "node_name_is": "Node's name is"
+  },
+  "sensor": {
+    "sensor_pin": "Sensor's pin",
+    "last_update_time": "Last update time",
+    "sensor_type": {
+      "temperature": "Temperature",
+      "humidity": "Humidity"
+    }
+  },
+  "logs": {
+    "logs": "Logs"
+  },
+  "loading": "Loading"
+}

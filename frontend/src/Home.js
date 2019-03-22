@@ -8,10 +8,11 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from "@material-ui/core/Typography";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-
+import {useTranslation, withTranslation, Trans} from 'react-i18next';
 import "./Home.css";
 import Paper from "@material-ui/core/Paper";
 import Sensor from "./Sensor";
+import Logs from "./Logs";
 
 class Home extends Component {
     constructor(params) {
@@ -34,6 +35,9 @@ class Home extends Component {
             "offset": 0,
             // "limit": 0,
         }).then(response => {
+            if (typeof response === 'undefined') {
+                return;
+            }
             this.setState(prevState => {
                 prevState.nodes = {};
                 for (let i in response.data.results) {
@@ -56,6 +60,9 @@ class Home extends Component {
             // "order_by_fields": "timestamp_ms",
             "filter": "sensor_node_mac_address == " + macAddress + "u",
         }).then(response => {
+            if (typeof response === 'undefined') {
+                return;
+            }
             this.setState(prevState => {
                 let sensors = {};
                 for (let i in response.data.results) {
@@ -70,25 +77,35 @@ class Home extends Component {
         })
     };
 
+    changeLanguage = languageCode => {
+        this.props.i18n.changeLanguage(languageCode);
+    };
+
     render() {
         const classes = this.props;
+        const {t, i18n} = this.props;
 
         return (
             <div>
-                <Block><Typography>esp32_sensor_network  demo</Typography></Block>
-                <Typography>Available nodes:</Typography>
+                <div class="languageButtons">
+                    <button onClick={() => this.changeLanguage('en')}>English</button>
+                    <button onClick={() => this.changeLanguage('ru')}>Русский</button>
+                    <button onClick={() => this.changeLanguage('ua')}>Українська</button>
+                </div>
+                <Block><Typography>esp32_sensor_network {t("common:home.demo")}</Typography></Block>
+                <Typography>{t("common:home.available_nodes")}:</Typography>
                 {
                     this.state.nodes === null ?
-                        "Loading..." :
+                        t("common:loading") + "..." :
                         Object.keys(this.state.nodes).map((key) => {
                             const node = this.state.nodes[key];
                             return <div key={key}>
                                 <Block>
                                     <Typography>
-                                        Node's mac is {node.mac_address}
+                                        {t("common:home.node_mac_is") + " " + node.mac_address}
                                         {
                                             node.name.length > 0 ? <Typography>
-                                                111Node's name is {node.name}
+                                                {t("common:home.node_name_is") + " " + node.name}
 
                                             </Typography> : null
                                         }
@@ -96,12 +113,12 @@ class Home extends Component {
                                 </Block>
 
                                 <div>
-                                    <Typography>Available sensors:</Typography>
+                                    <Typography>{t("common:home.available_sensors")}:</Typography>
                                 </div>
                                 <div className={"sensorsContainer"}>
                                     {
                                         typeof node.sensors === "undefined" ?
-                                            "loading..." :
+                                            t("common:loading") + "..." :
                                             Object.keys(node.sensors).map((key) => {
                                                 const sensor = node.sensors[key];
                                                 return <div className={"sensorContainer"} key={key}>
@@ -113,9 +130,10 @@ class Home extends Component {
                             </div>;
                         })
                 }
+                <Logs />
             </div>
         );
     }
 }
 
-export default Home;
+export default withTranslation()(Home);
