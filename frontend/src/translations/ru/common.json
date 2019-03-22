@@ -14,6 +14,15 @@
       "humidity": "Влажность"
     }
   },
+  "graph": {
+    "last10Minutes": "10 минут",
+    "lastHour": "Час",
+    "lastDay": "День",
+    "lastWeek": "Неделя",
+    "lastMonth": "Месяц",
+    "lastYear": "Год",
+    "nothing_is_here": "Ничего нет :("
+  },
   "logs": {
     "logs": "Логи"
   },

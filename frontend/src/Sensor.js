@@ -87,4 +87,4 @@ class Sensor extends Component {
     }
 }
 
-export default withTranslation()(withStyles()(Sensor));
+export default withTranslation()(Sensor);
