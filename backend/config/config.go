@@ -38,5 +38,5 @@ func init() {
 	Settings.SensorNodeUsername = "user"
 	Settings.SensorNodePassword = "qwerty"
 	Settings.ServerListeningAddress = "0.0.0.0:8080"
-	Settings.ServerMaximumNumberOfResultsPerPage = 4294967295
+	Settings.ServerMaximumNumberOfResultsPerPage = 1048576
 }
