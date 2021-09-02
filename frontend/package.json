@@ -8,7 +8,7 @@
     "@material-ui/icons": "^3.0.2",
     "@material-ui/lab": "^3.0.0-alpha.30",
     "amcharts3": "^3.21.14",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "i18next": "^15.0.7",
     "i18next-browser-languagedetector": "^3.0.1",
     "moment": "^2.24.0",
